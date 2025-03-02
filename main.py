@@ -184,8 +184,8 @@ line5 = ButtonCenter(None, (0, 0, 0), (90, 90, 150), (0, 50, 100), (20, 0, 80), 
 answer = ''
 backspace = pygwidgets.TextButton(window, (870, 212), 'backspace', 120, 60, textColor=(0, 0, 0), upColor=(90, 90, 150),
                                   overColor=(0, 50, 100), downColor=(20, 0, 80), fontName=font_path, fontSize=18)
-texts = ''
-text = pygwidgets.DisplayText(window, (0, 0), texts, font_path, 60, 1004, backgroundColor=(255, 255, 255), height=90)
+usr_showing_maths_texts = ''
+text = pygwidgets.DisplayText(window, (0, 0), usr_showing_maths_texts, font_path, 60, 1004, backgroundColor=(255, 255, 255), height=90)
 answertext = pygwidgets.DisplayText(window, (0, 570), '', font_path, 30, 1004, backgroundColor=(255, 255, 255),
                                     height=40)
 left = 0
@@ -207,43 +207,43 @@ while True:
             pygame.quit()
             sys.exit(0)
         window.fill((0, 191, 255))
-        if len(texts) <= 32:
-            text = pygwidgets.DisplayText(window, (0, 0), texts, font_path, 50, 1004, backgroundColor=(255, 255, 255),
+        if len(usr_showing_maths_texts) <= 32:
+            text = pygwidgets.DisplayText(window, (0, 0), usr_showing_maths_texts, font_path, 50, 1004, backgroundColor=(255, 255, 255),
                                           height=90)
-        elif len(texts) <= 42:
-            text = pygwidgets.DisplayText(window, (0, 0), texts, font_path, 40, 1004, backgroundColor=(255, 255, 255),
+        elif len(usr_showing_maths_texts) <= 42:
+            text = pygwidgets.DisplayText(window, (0, 0), usr_showing_maths_texts, font_path, 40, 1004, backgroundColor=(255, 255, 255),
                                           height=90)
-        elif len(texts) <= 55:
-            text = pygwidgets.DisplayText(window, (0, 0), texts, font_path, 30, 1004, backgroundColor=(255, 255, 255),
+        elif len(usr_showing_maths_texts) <= 55:
+            text = pygwidgets.DisplayText(window, (0, 0), usr_showing_maths_texts, font_path, 30, 1004, backgroundColor=(255, 255, 255),
                                           height=90)
-        elif len(texts) <= 110:
+        elif len(usr_showing_maths_texts) <= 110:
             # 双行显示
-            text.setValue(texts[0:56])
-            text2 = pygwidgets.DisplayText(window, (0, 30), texts[55:111], font_path, 30, 1004,
+            text.setValue(usr_showing_maths_texts[0:56])
+            text2 = pygwidgets.DisplayText(window, (0, 30), usr_showing_maths_texts[55:111], font_path, 30, 1004,
                                            backgroundColor=(255, 255, 255),
                                            height=60)
             text2.draw()
         else:
-            over = len(texts) - 165
-            if len(texts) >= 165:
+            over = len(usr_showing_maths_texts) - 165
+            if len(usr_showing_maths_texts) >= 165:
                 message_window.warning(
-                    "The length of the string that you input is longer than the max number(165):" + str(len(texts)) +
+                    "The length of the string that you input is longer than the max number(165):" + str(len(usr_showing_maths_texts)) +
                     ', suggesting canceling the formula into a shorter one, or the screen won' + "'"
                     + 't be able to show all characters.')
             if over <= 0:
-                text.setValue(texts[0:56])
-                text2 = pygwidgets.DisplayText(window, (0, 30), texts[55:111], font_path, 30, 1004,
+                text.setValue(usr_showing_maths_texts[0:56])
+                text2 = pygwidgets.DisplayText(window, (0, 30), usr_showing_maths_texts[55:111], font_path, 30, 1004,
                                                backgroundColor=(255, 255, 255),
                                                height=30)
-                text3 = pygwidgets.DisplayText(window, (0, 60), texts[110:166], font_path, 30, 1004,
+                text3 = pygwidgets.DisplayText(window, (0, 60), usr_showing_maths_texts[110:166], font_path, 30, 1004,
                                                backgroundColor=(255, 255, 255),
                                                height=30)
             else:
-                text.setValue(texts[0:56])
-                text2 = pygwidgets.DisplayText(window, (0, 30), texts[55 + over:111 + over], font_path, 30, 1004,
+                text.setValue(usr_showing_maths_texts[0:56])
+                text2 = pygwidgets.DisplayText(window, (0, 30), usr_showing_maths_texts[55 + over:111 + over], font_path, 30, 1004,
                                                backgroundColor=(255, 255, 255),
                                                height=30)
-                text3 = pygwidgets.DisplayText(window, (0, 60), texts[110 + over:166 + over], font_path, 30, 1004,
+                text3 = pygwidgets.DisplayText(window, (0, 60), usr_showing_maths_texts[110 + over:166 + over], font_path, 30, 1004,
                                                backgroundColor=(255, 255, 255),
                                                height=30)
             text2.draw()
@@ -255,16 +255,16 @@ while True:
             INDEX = line1.Buttons.index(i)
             if i.handleEvent(event):
                 if INDEX < 10:  # 输入数字
-                    texts += str(INDEX)
+                    usr_showing_maths_texts += str(INDEX)
                     mathtext += str(INDEX)
                 else:
                     if INDEX == 15:
-                        texts = ''
+                        usr_showing_maths_texts = ''
                         mathtext = ''
                         answer = ''
                         point = True
                     elif INDEX == 10:
-                        texts += '+'
+                        usr_showing_maths_texts += '+'
                         point = True
                         if left > right:  # 当前输入的是函数的参数
                             mathtext += '+'
@@ -272,7 +272,7 @@ while True:
                             mathtext += ' + '  # 在[]外
                             func = 0
                     elif INDEX == 11:
-                        texts += '-'
+                        usr_showing_maths_texts += '-'
                         point = True
                         if left > right:  # 当前输入的是函数的参数
                             mathtext += '-'
@@ -280,7 +280,7 @@ while True:
                             mathtext += ' - '  # 在[]外
                             func = 0
                     elif INDEX == 12:
-                        texts += '*'
+                        usr_showing_maths_texts += '*'
                         point = True
                         if left > right:  # 当前输入的是函数的参数
                             mathtext += '*'
@@ -288,7 +288,7 @@ while True:
                             mathtext += ' * '  # 在[]外
                             func = 0
                     elif INDEX == 13:
-                        texts += '/'
+                        usr_showing_maths_texts += '/'
                         point = True
                         if left > right:  # 当前输入的是函数的参数
                             mathtext += '/'
@@ -328,7 +328,7 @@ while True:
             INDEX = line2.Buttons.index(i)
             if i.handleEvent(event):
                 if INDEX == 0:
-                    texts += '('
+                    usr_showing_maths_texts += '('
                     if not func:
                         if left > right:  # 当前输入的是函数的参数
                             mathtext += '('
@@ -338,7 +338,7 @@ while True:
                         mathtext += '['
                         left += 1
                 elif INDEX == 1:
-                    texts += ')'
+                    usr_showing_maths_texts += ')'
                     if not func:
                         if left > right:  # 当前输入的是函数的参数
 
@@ -353,51 +353,51 @@ while True:
                             right = 0
                             func = 0
                 elif INDEX == 2:  # unused button
-                    MEMORY = (texts, mathtext)
+                    MEMORY = (usr_showing_maths_texts, mathtext)
                 elif INDEX == 3:  # unused button
-                    texts, mathtext = MEMORY
+                    usr_showing_maths_texts, mathtext = MEMORY
                 elif INDEX == 4:
                     mode = 'RAD'
                 elif INDEX == 5:
                     mode = 'DEG'
                 elif INDEX == 6:
-                    texts += 'sin'
+                    usr_showing_maths_texts += 'sin'
                     mathtext += 'sin;'
                     func = 1
                 elif INDEX == 7:
-                    texts += 'cos'
+                    usr_showing_maths_texts += 'cos'
                     mathtext += 'cos;'
                     func = 1
                 elif INDEX == 8:
-                    texts += 'tan'
+                    usr_showing_maths_texts += 'tan'
                     mathtext += 'tan;'
                     func = 1
                 elif INDEX == 9:
-                    texts += 'arcsin'
+                    usr_showing_maths_texts += 'arcsin'
                     mathtext += 'arcsin;'
                     func = 1
                 elif INDEX == 10:
-                    texts += 'arccos'
+                    usr_showing_maths_texts += 'arccos'
                     mathtext += 'arccos;'
                     func = 1
                 elif INDEX == 11:
-                    texts += 'arctan'
+                    usr_showing_maths_texts += 'arctan'
                     mathtext += 'arctan;'
                     func = 1
                 elif INDEX == 12:
-                    texts += '!'
+                    usr_showing_maths_texts += '!'
                     mathtext += '!'
                     func = 1
                 elif INDEX == 13:
-                    texts += 'log'
+                    usr_showing_maths_texts += 'log'
                     mathtext += 'log'
                     func = 1
                 elif INDEX == 14:
-                    texts += 'ln'
+                    usr_showing_maths_texts += 'ln'
                     mathtext += 'ln'
                     func = 1
                 elif INDEX == 15:
-                    texts += '√'
+                    usr_showing_maths_texts += '√'
                     mathtext += 'root'
                     func = 1
                 event_proceeded = True
@@ -412,22 +412,22 @@ while True:
             if i.handleEvent(event):
                 if INDEX == 0:
                     if point:
-                        texts += '.'
+                        usr_showing_maths_texts += '.'
                         mathtext += '.'
                         point = False
                     else:
                         i.disable()
                 elif INDEX == 1:
                     point = False
-                    texts += 'e'
+                    usr_showing_maths_texts += 'e'
                     mathtext += str(math.e)
                 elif INDEX == 2:
                     point = False
-                    texts += 'π'
+                    usr_showing_maths_texts += 'π'
                     mathtext += str(math.pi)
                 elif INDEX == 3:
                     point = True
-                    texts += '^'
+                    usr_showing_maths_texts += '^'
                     mathtext += '^'
                 elif INDEX == 4:
                     formula = pyghelpers.textAnswerDialog(window, (200, 100, 800, 200),
@@ -517,7 +517,7 @@ while True:
 
                     answertext.setValue('')
                     mathtext = ''
-                    texts = ''
+                    usr_showing_maths_texts = ''
                     choise = pyghelpers.textYesNoDialog(window, (0, 300, 400, 300), 'TYPE', 'definite integral',
                                                         'indefinite integral')  # None表示只有一个选项
                     x = sympy.symbols('x')
@@ -949,10 +949,10 @@ while True:
             INDEX = line4_2.Buttons.index(i)
             if i.handleEvent(event):
                 if INDEX == 0:
-                    texts += '-'
+                    usr_showing_maths_texts += '-'
                     mathtext += '-'
                 elif INDEX == 1:
-                    texts += '%'
+                    usr_showing_maths_texts += '%'
                     mathtext += '%'
                 elif INDEX == 2:
                     formula = pyghelpers.textAnswerDialog(window, (200, 100, 800, 200),
@@ -1067,7 +1067,7 @@ while True:
         event_proceeded = False
 
         if backspace.handleEvent(event):
-            texts = texts[0:-1]
+            usr_showing_maths_texts = usr_showing_maths_texts[0:-1]
             if len(mathtext) == 0:
                 continue
             while mathtext[-1] == " ":
